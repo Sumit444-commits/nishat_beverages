@@ -492,7 +492,7 @@ app.post('/api/auth/signup', async (req, res) => {
 app.post('/api/auth/login', async (req, res) => {
   try {
     const { identifier, password, email, phone } = req.body;
-    
+    console.log(email, "I called by login attempted!")
     console.log('🔑 Login attempt received:', { identifier, email, phone });
 
     let loginField, loginValue;

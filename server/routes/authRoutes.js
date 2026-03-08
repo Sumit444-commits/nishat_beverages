@@ -89,7 +89,7 @@ router.get('/users', (req, res) => {
 router.post('/login', (req, res) => {
   try {
     const { email, password } = req.body;
-
+    console.log(email,password)
     // Find user
     const user = users.find(u => u.email === email.toLowerCase());
     
