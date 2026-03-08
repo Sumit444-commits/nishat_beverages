@@ -1,0 +1,29 @@
+/* Basic styles for the application */
+/* Tailwind CSS is loaded via CDN in index.html */
+
+/* Additional custom styles */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Chart container styles */
+canvas {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+/* Table styles for better responsiveness */
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+/* Input field styles */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
