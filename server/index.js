@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // ========== DATABASE CONNECTION ========== //
 const MONGODB_URI = process.env.MONGODB_URI;
-const USE_LOCAL_FALLBACK = true; // Set to false if you only want Atlas
+const USE_LOCAL_FALLBACK = false; // Set to false if you only want Atlas
 
 const connectDB = async (retryCount = 0) => {
   try {
