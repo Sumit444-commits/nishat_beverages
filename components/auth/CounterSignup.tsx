@@ -113,7 +113,8 @@ const CounterSignup: React.FC<CounterSignupProps> = ({ onSignup, onLogin }) => {
       setError(validationError);
       return;
     }
-
+    console.log(formData);
+    
     setIsLoading(true);
     try {
       // Check if user already exists

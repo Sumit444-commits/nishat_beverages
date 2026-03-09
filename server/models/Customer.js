@@ -2,17 +2,17 @@
 
 import mongoose from "mongoose";
 
-// const salesAssignmentHistorySchema = new mongoose.Schema({
-//     salesmanId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'Salesman',
-//         default: null
-//     },
-//     date: {
-//         type: Date,
-//         default: Date.now
-//     }
-// });
+const salesAssignmentHistorySchema = new mongoose.Schema({
+    salesmanId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Salesman',
+        default: null
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
+});
 
 // Customer Schema
 const customerSchema = new mongoose.Schema(
@@ -72,7 +72,7 @@ const customerSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
-    // salesmanAssignmentHistory: [salesAssignmentHistorySchema],
+    salesmanAssignmentHistory: [salesAssignmentHistorySchema],
     notes: {
       type: String,
       trim: true,
@@ -95,20 +95,20 @@ const customerSchema = new mongoose.Schema(
 // customerSchema.index({ isActive: 1 });
 
 // // Pre-save middleware to update assignment history
-// customerSchema.pre('save', function(next) {
-//     if (this.isModified('salesmanId') && this.salesmanId) {
-//         this.salesmanAssignmentHistory.push({
-//             salesmanId: this.salesmanId,
-//             date: new Date()
-//         });
-//     }
-//     next();
-// });
+customerSchema.pre('save', function(next) {
+    if (this.isModified('salesmanId') && this.salesmanId) {
+        this.salesmanAssignmentHistory.push({
+            salesmanId: this.salesmanId,
+            date: new Date()
+        });
+    }
+    next();
+});
 
 // // Method to format customer for response
-// customerSchema.methods.toJSON = function() {
-//     const customer = this.toObject();
-//     customer.id = customer._id;
-//     return customer;
-// };
+customerSchema.methods.toJSON = function() {
+    const customer = this.toObject();
+    customer.id = customer._id;
+    return customer;
+};
 export const Customer = mongoose.model("Customer", customerSchema);

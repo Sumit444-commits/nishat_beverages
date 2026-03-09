@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Salesman } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL || process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
 export const useSalesmen = () => {
     const [salesmen, setSalesmen] = useState<Salesman[]>([]);
     const [loading, setLoading] = useState(true);

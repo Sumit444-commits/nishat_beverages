@@ -105,7 +105,7 @@ router.post('/auth/signup', async (req, res) => {
 router.post('/auth/login', async (req, res) => {
   try {
     const { identifier, password, email, phone } = req.body;
-    console.log(email, "I called by login attempted!")
+    
     console.log('🔑 Login attempt received:', { identifier, email, phone });
 
     let loginField, loginValue;
@@ -1181,7 +1181,7 @@ router.get('/area-assignments', async (req, res) => {
 // Get single area assignment by ID
 router.get('/area-assignments/:id', async (req, res) => {
   try {
-    const area = await AreaAssignment.findById(req.params.id)
+    const area = await AreaAssignment.findById({_id:req.params.id})
       .populate('salesmanId', 'name mobile')
       .lean();
     
@@ -1454,6 +1454,8 @@ router.put('/area-assignments/:id', async (req, res) => {
     });
   }
 });
+
+
 
 // Delete area (soft delete)
 router.delete('/area-assignments/:id', async (req, res) => {

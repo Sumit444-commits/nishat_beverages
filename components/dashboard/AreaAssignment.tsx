@@ -20,7 +20,7 @@ const AreaAssignment: React.FC<AreaAssignmentProps> = ({
     const [editSalesmanId, setEditSalesmanId] = useState<string>('unassigned');
     const [searchTerm, setSearchTerm] = useState('');
     const [notification, setNotification] = useState<{ type: 'success' | 'error', message: string } | null>(null);
-
+   
     const { 
         areaAssignments, 
         loading, 
@@ -52,9 +52,10 @@ const AreaAssignment: React.FC<AreaAssignmentProps> = ({
     const filteredAreas = useMemo(() => {
         if (!searchTerm) return areaAssignments;
         const term = searchTerm.toLowerCase();
+    
         return areaAssignments.filter(a => 
             a.area.toLowerCase().includes(term) ||
-            (a.salesmanId && salesmen.find(s => s.id === a.salesmanId)?.name.toLowerCase().includes(term))
+            (a.salesmanId && salesmen.find(s => s._id === a.salesmanId)?.name.toLowerCase().includes(term))
         );
     }, [areaAssignments, searchTerm, salesmen]);
 
@@ -87,6 +88,7 @@ const AreaAssignment: React.FC<AreaAssignmentProps> = ({
     const handleStartEdit = (area: AreaAssignmentType) => {
         setEditingId(area.id);
         setEditAreaName(area.area);
+        console.log(area.salesmanId);
         setEditSalesmanId(area.salesmanId?.toString() || 'unassigned');
     };
 
@@ -96,7 +98,9 @@ const AreaAssignment: React.FC<AreaAssignmentProps> = ({
         const result = await updateArea(
             editingId,
             editAreaName.trim(),
-            editSalesmanId === 'unassigned' ? null : Number(editSalesmanId)
+            // error00
+            // editSalesmanId === 'unassigned' ? null : Number(editSalesmanId)
+            editSalesmanId === 'unassigned' ? null : editSalesmanId
         );
         
         if (result.success) {
@@ -127,9 +131,9 @@ const AreaAssignment: React.FC<AreaAssignmentProps> = ({
     };
 
     const getSalesmanName = (salesmanId: number | string | null) => {
+        
         if (!salesmanId) return 'Unassigned';
-        const id = typeof salesmanId === 'string' ? parseInt(salesmanId) : salesmanId;
-        return salesmen.find(s => s.id === id)?.name || 'Unknown';
+        return salesmen.find(s => s._id === salesmanId)?.name || 'Unknown';
     };
 
     return (
@@ -288,7 +292,9 @@ const AreaAssignment: React.FC<AreaAssignmentProps> = ({
                                                         >
                                                             <option value="unassigned">Unassigned</option>
                                                             {salesmen.map(s => (
-                                                                <option key={s.id} value={s.id}>{s.name}</option>
+                                                                // error00
+                                                                // <option key={s.id} value={s.id}>{s.name}</option>
+                                                                <option key={s._id} value={s._id}>{s.name}</option>
                                                             ))}
                                                         </select>
                                                     </td>
