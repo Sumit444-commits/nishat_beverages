@@ -295,6 +295,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // ========== INITIALIZE DATABASE ========== //
 // Connect to DB immediately for Serverless functions
+connectDB();
 
 // ========== ROUTES ========== //
 app.get("/", (req, res) => {
@@ -326,10 +327,10 @@ app.use("*", (req, res) => {
 
 // ========== START SERVER ========== //
 const PORT = process.env.PORT || 5000;
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`📡 Server URL: http://localhost:${PORT}`);
-  });
+
+app.listen(PORT, () => {
+  console.log(`📡 Server URL: http://localhost:${PORT}`);
 });
+
 // Export for Vercel Serverless Functions
 export default app;
