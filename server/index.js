@@ -30,7 +30,7 @@
 //     console.log('\n' + '='.repeat(60));
 //     console.log('🔌 DATABASE CONNECTION ATTEMPT');
 //     console.log('='.repeat(60));
-
+    
 //     // Connection options to handle DNS and network issues
 //     const options = {
 //       serverSelectionTimeoutMS: 10000, // Timeout after 10 seconds
@@ -47,27 +47,27 @@
 //     console.log(`🔄 Retry attempt: ${retryCount}`);
 
 //     await mongoose.connect(MONGODB_URI, options);
-
+    
 //     console.log('\n✅ MongoDB Atlas Connected Successfully!');
 //     console.log(`📁 Database Name: ${mongoose.connection.db.databaseName}`);
 //     console.log(`📊 Host: ${mongoose.connection.host}`);
 //     console.log(`🔄 Connection State: ${mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'}`);
-
+    
 //     // Create indexes for better performance
 //     await createIndexes();
-
+    
 //     return true;
 
 //   } catch (error) {
 //     console.error('\n❌ MongoDB Atlas Connection Failed:', error.message);
-
+    
 //     if (error.name === 'MongooseServerSelectionError') {
 //       console.error('⚠️  Server Selection Error - This usually means:');
 //       console.error('   1. Your IP is not whitelisted in MongoDB Atlas');
 //       console.error('   2. Network/DNS issues');
 //       console.error('   3. Atlas cluster is not accessible');
 //     }
-
+    
 //     if (error.code === 'ECONNREFUSED') {
 //       console.error('⚠️  Connection refused - DNS resolution failed');
 //       console.error('   This is often a network/DNS issue');
@@ -82,14 +82,14 @@
 //           serverSelectionTimeoutMS: 5000,
 //           family: 4
 //         });
-
+        
 //         console.log('\n✅ Local MongoDB Connected Successfully!');
 //         console.log(`📁 Database Name: ${mongoose.connection.db.databaseName}`);
 //         console.log(`📍 Host: localhost`);
-
+        
 //         // Create indexes for better performance
 //         await createIndexes();
-
+        
 //         return true;
 //       } catch (localError) {
 //         console.error('❌ Local MongoDB connection also failed:', localError.message);
@@ -98,7 +98,7 @@
 //         console.log('2. Run: mongod (in a separate terminal)');
 //         console.log('3. Check if MongoDB service is running');
 //         console.log('4. Try connecting with MongoDB Compass first');
-
+        
 //         if (retryCount < 2) {
 //           console.log(`\n🔄 Retrying connection in 5 seconds... (Attempt ${retryCount + 2}/3)`);
 //           setTimeout(() => connectDB(retryCount + 1), 5000);
@@ -123,25 +123,25 @@
 // const createIndexes = async () => {
 //   try {
 //     console.log('\n📊 Creating database indexes...');
-
+    
 //     // User indexes
 //     await mongoose.connection.collection('users').createIndex({ email: 1 }, { unique: true });
 //     await mongoose.connection.collection('users').createIndex({ phone: 1 });
-
+    
 //     // Customer indexes
 //     await mongoose.connection.collection('customers').createIndex({ mobile: 1 }, { unique: true });
 //     await mongoose.connection.collection('customers').createIndex({ area: 1 });
 //     await mongoose.connection.collection('customers').createIndex({ salesmanId: 1 });
 //     await mongoose.connection.collection('customers').createIndex({ name: 'text', mobile: 'text' });
-
+    
 //     // Salesman indexes
 //     await mongoose.connection.collection('salesmen').createIndex({ mobile: 1 }, { unique: true });
 //     await mongoose.connection.collection('salesmen').createIndex({ name: 1 });
-
+    
 //     // Area indexes
 //     await mongoose.connection.collection('areaassignments').createIndex({ area: 1 }, { unique: true });
 //     await mongoose.connection.collection('areaassignments').createIndex({ salesmanId: 1 });
-
+    
 //     console.log('✅ Database indexes created successfully');
 //   } catch (error) {
 //     console.log('⚠️  Index creation warning:', error.message);
@@ -151,12 +151,17 @@
 
 // // ========== SCHEMAS ========== //
 
+
+
+
+
+
 // // ========== ROOT ROUTE ========== //
 // app.get('/', (req, res) => {
 //   const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
 //   const dbName = mongoose.connection.db?.databaseName || 'Not connected';
-
-//   res.json({
+  
+//   res.json({ 
 //     message: 'Nishat Beverages Admin API',
 //     database: {
 //       status: dbStatus,
@@ -252,7 +257,7 @@
 //   console.log(`   DELETE http://localhost:${PORT}/api/area-assignments/:id`);
 //   console.log(`   GET    http://localhost:${PORT}/api/area-assignments/stats/summary`);
 //   console.log('='.repeat(60));
-
+  
 //   // Connect to database
 //   connectDB().then(() => {
 //     console.log('\n✅ Server is fully ready!');
@@ -261,34 +266,37 @@
 //   });
 // });
 
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-import appRoute from "./routes/app-routes.js";
+
+
+
+
+
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import appRoute from './routes/app-routes.js';
 
 // Import the database connection module
-import { connectDB } from "./config/db.js";
+import { connectDB } from './config/db.js'; 
 
 dotenv.config();
 
 const app = express();
 
 // ========== MIDDLEWARE ========== //
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:5173",
-      "http://localhost:8080",
-      "https://nishat-beverages-kfyk.vercel.app",
-      "https://nishat-beverages.vercel.app",
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
+app.use(cors({
+  origin: [
+    'http://localhost:3000', 
+    'http://localhost:5173', 
+    'http://localhost:8080',
+    'https://nishat-beverages-kfyk.vercel.app',
+    'https://nishat-beverages.vercel.app'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -298,14 +306,13 @@ app.use(express.urlencoded({ extended: true }));
 connectDB();
 
 // ========== ROUTES ========== //
-app.get("/", (req, res) => {
-  res.json({
-    message: "Nishat Beverages Admin API is running!",
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Nishat Beverages Admin API is running!',
     database: {
-      status:
-        mongoose.connection.readyState === 1 ? "Connected" : "Disconnected",
-      name: mongoose.connection.db?.databaseName || "Not connected",
-    },
+      status: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
+      name: mongoose.connection.db?.databaseName || 'Not connected'
+    }
   });
 });
 
@@ -313,24 +320,31 @@ app.use("/api", appRoute);
 
 // ========== ERROR HANDLING ========== //
 app.use((err, req, res, next) => {
-  console.error("Server error:", err.stack);
+  console.error('Server error:', err.stack);
   res.status(500).json({
     success: false,
-    message: "Something went wrong!",
-    error: process.env.NODE_ENV === "development" ? err.message : undefined,
+    message: 'Something went wrong!',
+    error: process.env.NODE_ENV === 'development' ? err.message : undefined
   });
 });
 
-app.use("*", (req, res) => {
-  res.status(404).json({ success: false, message: "Route not found" });
+app.use('*', (req, res) => {
+  res.status(404).json({ success: false, message: 'Route not found' });
 });
 
 // ========== START SERVER ========== //
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`📡 Server URL: http://localhost:${PORT}`);
-});
+// Only listen automatically if running locally (Not on Vercel)
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    // console.log('\n' + '='.repeat(60));
+    // console.log('🚀 NISHAT BEVERAGES RO PLANT - ADMIN SERVER');
+    // console.log('='.repeat(60));
+    console.log(`📡 Server URL: http://localhost:${PORT}`);
+    // console.log('='.repeat(60) + '\n');
+  });
+}
 
 // Export for Vercel Serverless Functions
 export default app;
