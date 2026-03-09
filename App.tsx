@@ -57,6 +57,7 @@ const App: React.FC = () => {
   const handleLogin = (identifier: string, name: string) => {
     const user: User = { name, role: 'Administrator' };
     localStorage.setItem('ro_plant_logged_in_user', JSON.stringify(user));
+   
     setCurrentUser(user);
     setAuthState('loggedIn');
   };
@@ -116,7 +117,8 @@ const App: React.FC = () => {
         case 'counterResetPassword':
             return <CounterResetPassword onBack={() => setAuthState('counterLogin')} onSuccess={handleCounterResetPassword} />;
         case 'loggedIn':
-            return <Dashboard user={currentUser} onLogout={handleLogout} />;
+            // return <Dashboard user={currentUser} onLogout={handleLogout} />;
+           return currentUser ? <Dashboard user={currentUser} onLogout={handleLogout} /> : <p>Loading...</p>;
         case 'counterView':
             return <CounterView user={currentCounterUser} onLogout={handleLogout} />;
         default:

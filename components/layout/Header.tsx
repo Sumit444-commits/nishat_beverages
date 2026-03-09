@@ -15,7 +15,7 @@ const Header: React.FC<HeaderProps> = ({ user, notifications, onLogout }) => {
     const notificationRef = useRef<HTMLDivElement>(null);
 
     const unreadCount = notifications.filter(n => !n.read).length;
-
+    
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
