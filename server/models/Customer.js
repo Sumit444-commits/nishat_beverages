@@ -95,20 +95,20 @@ const customerSchema = new mongoose.Schema(
 // customerSchema.index({ isActive: 1 });
 
 // // Pre-save middleware to update assignment history
-customerSchema.pre('save', function(next) {
-    if (this.isModified('salesmanId') && this.salesmanId) {
-        this.salesmanAssignmentHistory.push({
-            salesmanId: this.salesmanId,
-            date: new Date()
-        });
-    }
-    next();
-});
+// customerSchema.pre('save', function(next) {
+//     if (this.isModified('salesmanId') && this.salesmanId) {
+//         this.salesmanAssignmentHistory.push({
+//             salesmanId: this.salesmanId,
+//             date: new Date()
+//         });
+//     }
+//     next();
+// });
 
 // // Method to format customer for response
-customerSchema.methods.toJSON = function() {
-    const customer = this.toObject();
-    customer.id = customer._id;
-    return customer;
-};
+// customerSchema.methods.toJSON = function() {
+//     const customer = this.toObject();
+//     customer.id = customer._id;
+//     return customer;
+// };
 export const Customer = mongoose.model("Customer", customerSchema);
