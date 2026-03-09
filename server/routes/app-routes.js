@@ -7,9 +7,6 @@ import bcrypt from "bcryptjs"
 const router = express.Router();
 
 
-
-
-
 router.get('/health', (req, res) => {
   const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
   const dbName = mongoose.connection.db?.databaseName || 'Not connected';
